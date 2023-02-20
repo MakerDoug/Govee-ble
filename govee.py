@@ -23,7 +23,8 @@ def scan_callback(event, addr):
         hex_str = data[52:58]
         decimal_val = int(hex_str, 16)
         celcius = decimal_val/10000
-        print(mac_add_hex, hex_str, data, celcius)
+        fahrenheit = celcius * 1.8 + 32
+        print(mac_add_hex, fahrenheit)
 
     
 ble.irq(scan_callback)
