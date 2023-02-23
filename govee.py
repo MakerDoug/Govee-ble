@@ -1,6 +1,7 @@
 import bluetooth
 import time
 import binascii
+import lvgl
 
 ble = bluetooth.BLE()
 
@@ -21,7 +22,7 @@ def scan_callback(event, addr):
     if mac_add_hex in my_devices:
         temp = get_temp(addr)
         print(my_devices[mac_add_hex], round(temp, 2))
-
+        return
 
 def get_temp(addr):
         data = binascii.hexlify(addr[4]).decode('utf-8')
@@ -30,14 +31,16 @@ def get_temp(addr):
         celcius = decimal_val/10000
         fahrenheit = celcius * 1.8 + 32
         return fahrenheit
-
+ 
 
 ble.irq(scan_callback)
-ble.gap_scan(10000, 1000000, 1000000)
+ble.gap_scan(0, 1000000, 1000000)
 
-time.sleep(11)
+while True:
+    time.sleep(10)
+    
+    
+
 
 ble.gap_scan(None)
 ble.irq(None)
-
-
