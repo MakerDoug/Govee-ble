@@ -1,17 +1,30 @@
 import bluetooth
 import time
 import binascii
-import lvgl
+import lvgl as lv
+
+loop_prog = True
+
+def create_screen(hex_color):
+  screen = lv.obj()
+  screen.set_style_local_bg_color(lv.obj.PART.MAIN, lv.STATE.DEFAULT, lv.color_hex(hex_color))
+  return screen
+
+scr_home = create_screen(0xdddddd)
+lv.scr_load(scr_home)
+
+my_devices = {'a4c1388c3622': 'Desk: ',
+              'a4c13859da18': 'Hallway: ',
+              'e38ec8c2b0ec': 'Outside: '}
+
 
 ble = bluetooth.BLE()
 
-my_devices = {'a4c1388c3622': 'Office-1: ',
-              'a4c13859da18': 'Office-2: ' }
-
-
 if ble.active() == False:
     ble.active(True)
-           
+
+
+
 def scan_callback(event, addr):
     if event == 6:
         print('SCAN DONE')
@@ -36,11 +49,11 @@ def get_temp(addr):
 ble.irq(scan_callback)
 ble.gap_scan(0, 1000000, 1000000)
 
-while True:
+while loop_prog:
     time.sleep(10)
-    
-    
+ 
 
 
 ble.gap_scan(None)
 ble.irq(None)
+
