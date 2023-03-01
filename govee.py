@@ -1,10 +1,10 @@
 import bluetooth
 import time
 import binascii
-import lvgl as lv
+#import lvgl as lv
 
 loop_prog = True
-
+'''
 def create_screen(hex_color):
   screen = lv.obj()
   screen.set_style_local_bg_color(lv.obj.PART.MAIN, lv.STATE.DEFAULT, lv.color_hex(hex_color))
@@ -12,10 +12,12 @@ def create_screen(hex_color):
 
 scr_home = create_screen(0xdddddd)
 lv.scr_load(scr_home)
-
-my_devices = {'a4c1388c3622': 'Desk: ',
-              'a4c13859da18': 'Hallway: ',
-              'e38ec8c2b0ec': 'Outside: '}
+'''
+my_devices = {'a4c1388c3622': 'Desk:       ',
+              'a4c13859da18': 'Thermostat: ',
+              'a4c138133c6c': 'Patio:      ',
+              'a4c1381e4420': 'AC Vent:    ',
+              'a4c138d14b3a': 'Outside:    '}
 
 
 ble = bluetooth.BLE()
@@ -56,4 +58,3 @@ while loop_prog:
 
 ble.gap_scan(None)
 ble.irq(None)
-
