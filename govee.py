@@ -17,7 +17,8 @@ my_devices = {'a4c1388c3622': 'Desk:       ',
               'a4c13859da18': 'Thermostat: ',
               'a4c138133c6c': 'Patio:      ',
               'a4c1381e4420': 'AC Vent:    ',
-              'a4c138d14b3a': 'Outside:    '}
+              'a4c138d14b3a': 'Outside:    ',
+              'a4c138c3e807': 'Bathroom    ' }
 
 desk = 0
 thermostat = 0
@@ -43,8 +44,6 @@ def scan_callback(event, addr):
     if mac_add_hex in my_devices:
         temp = get_temp(addr)
         print(my_devices[mac_add_hex], round(temp, 2))
-        
-        
         return
 
 def get_temp(addr):
@@ -53,7 +52,7 @@ def get_temp(addr):
         decimal_val = int(hex_str, 16)
         celcius = decimal_val/10000
         fahrenheit = celcius * 1.8 + 32
-        return fahrenheit
+        return round(fahrenheit, 1)
  
 
 ble.irq(scan_callback)
