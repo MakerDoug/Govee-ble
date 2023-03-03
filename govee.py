@@ -63,6 +63,7 @@ try:
             if device[2] == 0:
                 continue
             print(device[1], device[2])
+        print('\n')
 
 except KeyboardInterrupt:
     print('User stopped the program.')
