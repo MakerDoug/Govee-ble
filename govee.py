@@ -52,7 +52,8 @@ def get_temp(addr):
         decimal_val = int(hex_str, 16)
         celcius = decimal_val/10000
         fahrenheit = celcius * 1.8 + 32
-        return round(fahrenheit, 1)
+        fahrenheit_rounded = round(fahrenheit, 1)
+        return fahrenheit_rounded
  
 
 ble.irq(scan_callback)
