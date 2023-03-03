@@ -1,12 +1,9 @@
 import bluetooth
 import time
 import binascii
-import urequests 
 
 loop_prog = True
 
-HTTP_HEADERS = {'Content-Type': 'application/json'} 
-API_KEY = 'T9Z5AG2TQF80XA0Z' 
 
 my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c13859da18', 'Thermostat: ', 0),
@@ -60,17 +57,12 @@ ble.gap_scan(0,500000, 500000)
 
 try:
     while loop_prog:
-        time.sleep(16)
+        time.sleep(6)
         for device in my_devices:
             if device[2] == 0:
                 continue
             print(device[1], device[2])
-            device_readings = {'field 1':device[2]}
-            print(device_readings)
-        request = urequests.post( 'http://api.thingspeak.com/update?api_key=' + API_KEY, json = device_readings, headers = HTTP_HEADERS )  
-        request.close() 
 except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
     ble.gap_scan(None)
-
