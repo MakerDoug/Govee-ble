@@ -19,6 +19,13 @@ my_devices = {'a4c1388c3622': 'Desk:       ',
               'a4c1381e4420': 'AC Vent:    ',
               'a4c138d14b3a': 'Outside:    '}
 
+desk = 0
+thermostat = 0
+patio = 0
+ac_vent = 0
+Outside = 0
+
+
 
 ble = bluetooth.BLE()
 
@@ -26,9 +33,8 @@ if ble.active() == False:
     ble.active(True)
 
 
-
 def scan_callback(event, addr):
-    if event == 6:
+    if event == 6:  #because event 6 has no addr returned
         print('SCAN DONE')
         return
     
@@ -37,6 +43,8 @@ def scan_callback(event, addr):
     if mac_add_hex in my_devices:
         temp = get_temp(addr)
         print(my_devices[mac_add_hex], round(temp, 2))
+        
+        
         return
 
 def get_temp(addr):
@@ -49,12 +57,15 @@ def get_temp(addr):
  
 
 ble.irq(scan_callback)
-ble.gap_scan(0, 1000000, 1000000)
+ble.gap_scan(0,500000, 500000)
 
-while loop_prog:
-    time.sleep(10)
- 
+try:
+    while loop_prog:
+        time.sleep(6)
+except KeyboardInterrupt:
+    print('User stopped the program.')
+    ble.irq(None)
+    ble.gap_scan(None)
 
 
-ble.gap_scan(None)
-ble.irq(None)
+
