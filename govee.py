@@ -58,10 +58,12 @@ ble.gap_scan(0,500000, 500000)
 try:
     while loop_prog:
         time.sleep(6)
+        
         for device in my_devices:
             if device[2] == 0:
                 continue
             print(device[1], device[2])
+
 except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
