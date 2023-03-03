@@ -60,15 +60,15 @@ ble.gap_scan(0,500000, 500000)
 
 try:
     while loop_prog:
-        time.sleep(6)
+        time.sleep(16)
         for device in my_devices:
             if device[2] == 0:
                 continue
             print(device[1], device[2])
-            device_readings = {'field1':device[2]}
+            device_readings = {'field 1':device[2]}
             print(device_readings)
-            request = urequests.post( 'http://api.thingspeak.com/update?api_key=' + API_KEY, json = device_readings, headers = HTTP_HEADERS )  
-            request.close() 
+        request = urequests.post( 'http://api.thingspeak.com/update?api_key=' + API_KEY, json = device_readings, headers = HTTP_HEADERS )  
+        request.close() 
 except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
