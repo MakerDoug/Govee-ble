@@ -4,7 +4,6 @@ import binascii
 
 loop_prog = True
 
-
 my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c13859da18', 'Thermostat: ', 0),
               ('a4c138133c6c', 'Patio:      ', 0),
@@ -12,13 +11,9 @@ my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c138d14b3a', 'Outside:    ', 0),
               ('a4c138c3e807', 'Bathroom:   ', 0)]
 
-
-
 ble = bluetooth.BLE()
-
 if ble.active() == False:
     ble.active(True)
-
 
 def scan_callback(event, addr):
     global my_devices  # Declare my_devices as global
@@ -27,7 +22,7 @@ def scan_callback(event, addr):
         print('SCAN DONE')
         return
     
-    mac_add_string = addr[1]
+    mac_add_string = bytes(addr[1]) #change to bytes because some return memoryview
     mac_add_hex = binascii.hexlify(mac_add_string).decode('utf-8')
     if mac_add_hex in [device[0] for device in my_devices]:
         temp = get_temp(addr)
@@ -35,8 +30,9 @@ def scan_callback(event, addr):
         for device in my_devices:
             if device[0] == mac_add_hex:
                 updated_device = (device[0], device[1], round(temp, 2))
-                #print(updated_device[1], updated_device[2])
             else:
+                #updated_device must have a value, since it has no new data
+                #we will just make it what it currently is.
                 updated_device = device
             updated_devices.append(updated_device)
         my_devices = updated_devices
@@ -69,4 +65,3 @@ except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
     ble.gap_scan(None)
-
