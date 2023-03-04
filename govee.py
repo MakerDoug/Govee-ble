@@ -46,7 +46,6 @@ def get_temp(addr):
         fahrenheit = celcius * 1.8 + 32
         fahrenheit_rounded = round(fahrenheit, 1)
         return fahrenheit_rounded
- 
 
 ble.irq(scan_callback)
 ble.gap_scan(0,500000, 500000)
