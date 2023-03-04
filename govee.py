@@ -21,9 +21,9 @@ def scan_callback(event, addr):
     if event == 6:  #because event 6 has no addr returned
         print('SCAN DONE')
         return
-    
-    mac_add_string = bytes(addr[1]) #change to bytes because some return memoryview
-    mac_add_hex = binascii.hexlify(mac_add_string).decode('utf-8')
+
+    mac_add_hex = binascii.hexlify(addr[1]).decode('utf-8')
+
     if mac_add_hex in [device[0] for device in my_devices]:
         temp = get_temp(addr)
         updated_devices = []
@@ -64,3 +64,5 @@ except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
     ble.gap_scan(None)
+
+
