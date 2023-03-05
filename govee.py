@@ -56,6 +56,13 @@ try:
     while loop_prog:
         time.sleep(15)
  
+        sent	  = {'Desk':my_devices[0][2],
+                     'Thermostat':my_devices[1][2],
+                     'Patio':my_devices[2][2],
+                     'AC':my_devices[3][2],
+                     'Outside':my_devices[4][2],
+                     'Bathroom':my_devices[5][2]}
+        
         temp_json = {'field1':my_devices[0][2],
                      'field2':my_devices[1][2],
                      'field3':my_devices[2][2],
@@ -64,7 +71,7 @@ try:
                      'field6':my_devices[5][2]}
 
         request = urequests.post( THINGSPEAK + API_KEY, json = temp_json, headers = HTTP_HEADERS )
-        print('sent')
+        print(sent)
 
 except KeyboardInterrupt:
     print('User stopped the program.')
