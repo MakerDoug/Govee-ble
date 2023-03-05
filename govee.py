@@ -14,8 +14,8 @@ my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c138c3e807', 'Bathroom:   ', 0)]
 
 HTTP_HEADERS = {'Content-Type': 'application/json'} 
-thingspeak = 'http://api.thingspeak.com/update?api_key='
-api_key = '61I0QNLTPFQHRSY1'
+THINGSPEAK = 'http://api.thingspeak.com/update?api_key='
+API_KEY = '61I0QNLTPFQHRSY1'
 
 ble = bluetooth.BLE()
 if ble.active() == False:
@@ -46,7 +46,8 @@ def get_temp(addr):
     celcius = decimal_val / 10000
     fahrenheit = celcius * 1.8 + 32
     fahrenheit_rounded = int(fahrenheit * 10 + 0.5) / 10
-    return fahrenheit_rounded
+    return round(fahrenheit_rounded, 2)
+
 
 ble.irq(scan_callback)
 ble.gap_scan(0,500000, 500000)
@@ -55,20 +56,16 @@ try:
     while loop_prog:
         time.sleep(15)
  
-
         temp_json = {'field1':my_devices[0][2],
                      'field2':my_devices[1][2],
                      'field3':my_devices[2][2],
                      'field4':my_devices[3][2],
                      'field5':my_devices[4][2],
                      'field6':my_devices[5][2]}
-                     
 
-        request = urequests.post( thingspeak + api_key, json = temp_json, headers = HTTP_HEADERS )
+        request = urequests.post( THINGSPEAK + API_KEY, json = temp_json, headers = HTTP_HEADERS )
         print('sent')
-    
 
- 
 except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
