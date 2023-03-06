@@ -45,7 +45,9 @@ def get_temp(addr):
     decimal_val = int(hex_str, 16)
     celcius = decimal_val / 10000
     fahrenheit = celcius * 1.8 + 32
-    fahrenheit_rounded = int(fahrenheit * 10 + 0.5) / 10
+    fahrenheit_rounded = round(fahrenheit, 2)
+    
+    #fahrenheit_rounded = int(fahrenheit * 10 + 0.5) / 10
     return round(fahrenheit_rounded, 2)
 
 
