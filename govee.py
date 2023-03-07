@@ -56,8 +56,16 @@ ble.gap_scan(0,500000, 500000)
 
 try:
     while loop_prog:
-        time.sleep(15)
+        time.sleep(2)
  
+        Desk = 			my_devices[0][2]
+        Thermostat = 	my_devices[1][2]
+        Patio = 		my_devices[2][2]
+        AC = 			my_devices[3][2]
+        Outside = 		my_devices[4][2]
+        Bathroom = 		my_devices[5][2]
+        
+        
         sent	  = {'Desk':my_devices[0][2],
                      'Thermostat':my_devices[1][2],
                      'Patio':my_devices[2][2],
@@ -65,14 +73,14 @@ try:
                      'Outside':my_devices[4][2],
                      'Bathroom':my_devices[5][2]}
         
-        temp_json = {'field1':my_devices[0][2],
-                     'field2':my_devices[1][2],
-                     'field3':my_devices[2][2],
-                     'field4':my_devices[3][2],
-                     'field5':my_devices[4][2],
-                     'field6':my_devices[5][2]}
+        temp_json = {'field1':Desk,
+                     'field2':Thermostat,
+                     'field3':Patio,
+                     'field4':AC,
+                     'field5':Outside,
+                     'field6':Bathroom}
 
-        request = urequests.post( THINGSPEAK + API_KEY, json = temp_json, headers = HTTP_HEADERS )
+        #request = urequests.post( THINGSPEAK + API_KEY, json = temp_json, headers = HTTP_HEADERS )
         print(sent)
 
 except KeyboardInterrupt:
