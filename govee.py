@@ -52,12 +52,13 @@ def get_temp(addr):
 
 
 ble.irq(scan_callback)
-ble.gap_scan(0,500000, 500000)
+ble.gap_scan(0,500000,500000)
 
 try:
     while loop_prog:
         time.sleep(2)
  
+        #Every loop loads these with the latest temperature.
         Desk = 			my_devices[0][2]
         Thermostat = 	my_devices[1][2]
         Patio = 		my_devices[2][2]
@@ -66,12 +67,13 @@ try:
         Bathroom = 		my_devices[5][2]
         
         
-        sent	  = {'Desk':my_devices[0][2],
-                     'Thermostat':my_devices[1][2],
-                     'Patio':my_devices[2][2],
-                     'AC':my_devices[3][2],
-                     'Outside':my_devices[4][2],
-                     'Bathroom':my_devices[5][2]}
+        #This is just for debugging, printing to console.
+        sent	  = {'Desk':		Desk,
+                     'Thermostat':	Thermostat,
+                     'Patio':		Patio,
+                     'AC':			AC,
+                     'Outside':		Outside,
+                     'Bathroom':	Bathroom}
         
         temp_json = {'field1':Desk,
                      'field2':Thermostat,
@@ -88,3 +90,5 @@ except KeyboardInterrupt:
     ble.irq(None)
     ble.gap_scan(None)
    
+
+
