@@ -11,7 +11,8 @@ my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c138133c6c', 'Patio:      ', 0),
               ('a4c1381e4420', 'AC Vent:    ', 0),
               ('a4c138d14b3a', 'Outside:    ', 0),
-              ('a4c138c3e807', 'Bathroom:   ', 0)]
+              ('a4c138c3e807', 'Bathroom:   ', 0),
+              ('a4c1380839ae', 'MeliDesk:   ', 0)]
 
 HTTP_HEADERS = {'Content-Type': 'application/json'} 
 THINGSPEAK = 'http://api.thingspeak.com/update?api_key='
@@ -26,7 +27,7 @@ def scan_callback(event, addr):
     global my_devices  # Declare my_devices as global
     
     if event == 6:  #because event 6 has no addr returned
-        print('SCAN DONE')
+        #print('SCAN DONE')
         return
 
     mac_add_hex = binascii.hexlify(addr[1]).decode('utf-8')
@@ -52,11 +53,12 @@ def get_temp(addr):
 
 
 ble.irq(scan_callback)
-ble.gap_scan(0,500000,500000)
+
 
 try:
     while loop_prog:
-        time.sleep(2)
+        ble.gap_scan(4000,2000000,2000000)
+        time.sleep(5)
  
         #Every loop loads these with the latest temperature.
         Desk = 			my_devices[0][2]
@@ -65,7 +67,7 @@ try:
         AC = 			my_devices[3][2]
         Outside = 		my_devices[4][2]
         Bathroom = 		my_devices[5][2]
-        
+        MeliDesk =      my_devices[6][2]
         
         #This is just for debugging, printing to console.
         sent	  = {'Desk':		Desk,
@@ -73,14 +75,16 @@ try:
                      'Patio':		Patio,
                      'AC':			AC,
                      'Outside':		Outside,
-                     'Bathroom':	Bathroom}
+                     'Bathroom':	Bathroom,
+                     'MeliDesk':    MeliDesk}
         
         temp_json = {'field1':Desk,
                      'field2':Thermostat,
                      'field3':Patio,
                      'field4':AC,
                      'field5':Outside,
-                     'field6':Bathroom}
+                     'field6':Bathroom,
+                     'field7':MeliDesk}
 
         #request = urequests.post( THINGSPEAK + API_KEY, json = temp_json, headers = HTTP_HEADERS )
         print(sent)
@@ -89,6 +93,3 @@ except KeyboardInterrupt:
     print('User stopped the program.')
     ble.irq(None)
     ble.gap_scan(None)
-   
-
-
