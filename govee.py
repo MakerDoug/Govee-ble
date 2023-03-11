@@ -4,6 +4,9 @@ import binascii
 import urequests 
 
 
+
+
+
 loop_prog = True
 
 my_devices = [('a4c1388c3622', 'Desk:       ', 0),
@@ -21,6 +24,17 @@ API_KEY = '61I0QNLTPFQHRSY1'
 ble = bluetooth.BLE()
 if ble.active() == False:
     ble.active(True)
+
+
+
+mac_bytes = ble.config('mac')
+print(mac_bytes)
+# Convert the bytes to a string and format it as a MAC address
+#mac_str = ':'.join(['{:02x}'.format(x) for x in mac_bytes])
+
+# Print the MAC address
+#print('Bluetooth MAC address:', mac_str)
+
 
 
 def scan_callback(event, addr):
