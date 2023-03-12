@@ -17,6 +17,8 @@ my_devices = [('a4c1388c3622', 'Desk:       ', 0),
               ('a4c138c3e807', 'Bathroom:   ', 0),
               ('a4c1380839ae', 'MeliDesk:   ', 0)]
 
+#govee 5074 'e38ec8c2b0ec', 'Front Door:  '
+
 HTTP_HEADERS = {'Content-Type': 'application/json'} 
 THINGSPEAK = 'http://api.thingspeak.com/update?api_key='
 API_KEY = '61I0QNLTPFQHRSY1'
@@ -24,17 +26,6 @@ API_KEY = '61I0QNLTPFQHRSY1'
 ble = bluetooth.BLE()
 if ble.active() == False:
     ble.active(True)
-
-
-
-mac_bytes = ble.config('mac')
-print(mac_bytes)
-# Convert the bytes to a string and format it as a MAC address
-#mac_str = ':'.join(['{:02x}'.format(x) for x in mac_bytes])
-
-# Print the MAC address
-#print('Bluetooth MAC address:', mac_str)
-
 
 
 def scan_callback(event, addr):
